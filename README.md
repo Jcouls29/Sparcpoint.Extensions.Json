@@ -32,7 +32,7 @@ These configurations can be applied to `JsonSerializerOptions` with **higher** o
 using System.Text.Json;
 
 var options = new JsonSerializerOptions()
-    .WithHigherPriority<Person>(entity => entity
+    .Configure<Person>(entity => entity
         .Property(p => p.FirstName).Name("first_name")
         .Property(p => p.LastName).Ignore()
         .Property(p => p.Age).Required()
@@ -56,12 +56,12 @@ Console.WriteLine(json);
 ### `JsonEntityBuilder<TEntity>`
 
 Represents configuration for a single entity type.
-Used internally by the `.WithHigherPriority<T>()` and `.WithLowerPriority<T>()` extension methods.
+Used internally by the `.Configure<T>()`.
 
 You typically won’t instantiate this directly—instead, you pass a lambda to configure it:
 
 ```csharp
-options.WithLowerPriority<User>(entity => {
+options.Configure<User>(entity => {
     entity.Property(u => u.Email).Ignore();
 });
 ```
@@ -105,34 +105,25 @@ entity.Property(u => u.Id)
 
 ## ⚙️ Applying Configuration to JsonSerializerOptions
 
-Two extension methods are provided for integrating your configurations:
+The extension method is provided for integrating your configurations:
 
-### `.WithHigherPriority<T>()`
+### `.Configure<T>()`
 
 Adds the configuration at the *front* of the `TypeInfoResolverChain`.
 This means it takes precedence over existing resolvers.
 
+> **NOTE**: It will always ensure that at least one `DefaultJsonTypeInfoResolver` is at the end of the chain.
+
 ```csharp
-options.WithHigherPriority<MyModel>(builder => {
+options.Configure<MyModel>(builder => {
     builder.Property(m => m.Secret).Ignore();
-});
-```
-
-### `.WithLowerPriority<T>()`
-
-Adds the configuration at the *end* of the `TypeInfoResolverChain`.
-This means existing resolvers take precedence over it.
-
-```csharp
-options.WithLowerPriority<MyModel>(builder => {
-    builder.Property(m => m.Description).Name("desc");
 });
 ```
 
 Both methods support an optional parameter to control inheritance:
 
 ```csharp
-.WithHigherPriority<MyModel>(builder => { ... }, includeInheritedTypes: true)
+.Configure<MyModel>(builder => { ... }, includeInheritedTypes: true)
 ```
 
 ---
@@ -143,12 +134,12 @@ You can chain multiple configuration calls for clarity:
 
 ```csharp
 options
-    .WithHigherPriority<Order>(entity => entity
+    .Configure<Order>(entity => entity
         .Property(o => o.OrderId).Name("id")
         .Property(o => o.CustomerName).Name("customer")
         .Property(o => o.InternalNotes).Ignore()
     )
-    .WithLowerPriority<Customer>(entity => entity
+    .Configure<Customer>(entity => entity
         .Property(c => c.Email).Required()
     );
 ```
@@ -179,7 +170,7 @@ This API helps you:
 ```csharp
 if (Environment.GetEnvironmentVariable("APP_ENV") == "Production")
 {
-    options.WithHigherPriority<User>(b =>
+    options.Configure<User>(b =>
         b.Property(u => u.Password).Ignore()
     );
 }
