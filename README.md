@@ -26,7 +26,7 @@ dotnet add package Sparcpoint.Extensions.Json
 ## 🚀 Getting Started
 
 You configure serialization rules using the fluent `JsonEntityBuilder<T>` API.
-These configurations can be applied to `JsonSerializerOptions` with **higher** or **lower** priority.
+These configurations can be applied to `JsonSerializerOptions` directly.
 
 ```csharp
 using System.Text.Json;
