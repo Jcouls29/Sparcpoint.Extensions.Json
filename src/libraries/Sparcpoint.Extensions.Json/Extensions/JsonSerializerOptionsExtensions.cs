@@ -1,5 +1,7 @@
 ﻿using Sparcpoint.Extensions.Json;
 using System.Collections;
+using System.Linq;
+using System.Text.Json.Serialization.Metadata;
 
 namespace System.Text.Json;
 
@@ -14,6 +16,8 @@ public static class JsonSerializerOptionsExtensions
         configure(builder);
         options.TypeInfoResolverChain.Add(builder.Build());
 
+        CheckLastInChainIsDefault(options);
+
         return options;
     }
 
@@ -26,7 +30,21 @@ public static class JsonSerializerOptionsExtensions
         configure(builder);
         options.TypeInfoResolverChain.Insert(0, builder.Build());
 
+        CheckLastInChainIsDefault(options);
+
         return options;
+    }
+
+    private static void CheckLastInChainIsDefault(this JsonSerializerOptions options)
+    {
+        var newChain = options.TypeInfoResolverChain.Where(t => !(t is DefaultJsonTypeInfoResolver resolver && !resolver.Modifiers.Any())).ToArray();
+        options.TypeInfoResolverChain.Clear();
+
+        foreach(var link in newChain)
+        {
+            options.TypeInfoResolverChain.Add(link);
+        }
+        options.TypeInfoResolverChain.Add(new DefaultJsonTypeInfoResolver());
     }
 
     private static bool IsValidType(this Type type)

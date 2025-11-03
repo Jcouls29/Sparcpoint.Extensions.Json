@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../README.md" />
+  </Folder>
   <Project Path="../test/Sparcpoint.Extensions.Json.UnitTests/Sparcpoint.Extensions.Json.UnitTests.csproj" Id="22e81d03-ea61-4e28-8049-dd56c581e08c" />
   <Project Path="libraries/Sparcpoint.Extensions.Json/Sparcpoint.Extensions.Json.csproj" Id="83d22290-6793-459f-8c63-9a8a2340e94d" />
 </Solution>

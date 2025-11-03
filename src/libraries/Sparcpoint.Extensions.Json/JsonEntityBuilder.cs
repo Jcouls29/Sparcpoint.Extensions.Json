@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 
 namespace Sparcpoint.Extensions.Json;
@@ -42,12 +43,38 @@ public class JsonEntityBuilder<TEntity>
             .Where(a => a != null)
             .ToArray();
 
-        return new DefaultJsonTypeInfoResolver().WithAddedModifier((info) =>
-        {
-            foreach(var action in actions)
-            {
-                action(info);
-            }
-        });
+        return new EntityTypeResolver(typeof(TEntity), actions, IncludeInheritedTypes);
     }
 }
+
+internal class EntityTypeResolver : IJsonTypeInfoResolver
+{
+    public EntityTypeResolver(Type entityType, IEnumerable<Action<JsonTypeInfo>> actions, bool includeInheritedTypes)
+    {
+        EntityType = entityType;
+        Actions = actions.ToList();
+        IncludeInheritedTypes = includeInheritedTypes;
+    }
+
+    public List<Action<JsonTypeInfo>> Actions { get; }
+    public Type EntityType { get; }
+    public bool IncludeInheritedTypes { get; }
+
+    public JsonTypeInfo? GetTypeInfo(Type type, JsonSerializerOptions options)
+    {
+        if (type == EntityType || (IncludeInheritedTypes && EntityType.IsAssignableFrom(type)))
+        {
+            return new DefaultJsonTypeInfoResolver().WithAddedModifier((info) =>
+            {
+                foreach (var action in Actions)
+                {
+                    action(info);
+                }
+            }).GetTypeInfo(type, options);
+        }
+
+        return null;
+    }
+}
+
+
