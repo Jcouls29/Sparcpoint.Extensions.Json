@@ -63,7 +63,7 @@ public class PropertyIgnoreTests
     {
         var options = new JsonSerializerOptions();
         options.IncludeFields = true;
-        options.WithHigherPriority<SampleClass>(b => configure?.Invoke(b));
+        options.Configure<SampleClass>(b => configure?.Invoke(b));
 
         var data = new SampleClass();
 

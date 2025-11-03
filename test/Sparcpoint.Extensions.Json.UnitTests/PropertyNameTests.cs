@@ -94,9 +94,9 @@ public class PropertyNameTests
     public void LastNameChangeWinsWithMultipleAppends()
     {
         var options = new JsonSerializerOptions();
-        options.WithHigherPriority<SampleClass>(b => b.Property(t => t.Property).Name("name-01"))
-            .WithHigherPriority<SampleClass>(b => b.Property(t => t.Property).Name("name-02"))
-            .WithHigherPriority<SampleClass>(b => b.Property(t => t.Property).Name("name-03"));
+        options.Configure<SampleClass>(b => b.Property(t => t.Property).Name("name-01"))
+            .Configure<SampleClass>(b => b.Property(t => t.Property).Name("name-02"))
+            .Configure<SampleClass>(b => b.Property(t => t.Property).Name("name-03"));
 
         var json = JsonSerializer.Serialize(new SampleClass(), options);
         Assert.NotNull(json);
@@ -112,7 +112,7 @@ public class PropertyNameTests
         const string VALUE = "new-value";
 
         var options = new JsonSerializerOptions();
-        options.WithHigherPriority<SampleClass>(b => b.Property(t => t.Property).Name(NAME));
+        options.Configure<SampleClass>(b => b.Property(t => t.Property).Name(NAME));
 
         var json = JsonSerializer.Serialize(new SampleClass { Property = VALUE }, options);
         Assert.Contains($"\"{NAME}\":\"{VALUE}\"", json);
@@ -132,7 +132,7 @@ public class PropertyNameTests
     {
         var options = new JsonSerializerOptions();
         options.IncludeFields = true;
-        options.WithHigherPriority<SampleClass>(b => configure?.Invoke(b));
+        options.Configure<SampleClass>(b => configure?.Invoke(b));
 
         var json = JsonSerializer.Serialize(new SampleClass(), options);
         Assert.NotNull(json);

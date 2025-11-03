@@ -25,7 +25,7 @@ public class InheritanceTests
     {
         const string PROP_NAME = "new-base";
 
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(PROP_NAME), true);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Name(PROP_NAME), true);
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (PROP_NAME, BASE_VALUE));
     }
 
@@ -34,35 +34,35 @@ public class InheritanceTests
     {
         const string PROP_NAME = "new-base";
 
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(PROP_NAME), false);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Name(PROP_NAME), false);
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (nameof(BaseClass.BaseProperty), BASE_VALUE));
     }
 
     [Fact]
     public void GivenInheritedTypesIncluded_WhenBaseIgnored_ReflectedInDerivedType()
     {
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Ignore(), true);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Ignore(), true);
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE));
     }
 
     [Fact]
     public void GivenInheritedTypesNotIncluded_WhenBaseIgnored_NotChangedInDerivedType()
     {
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Ignore(), false);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Ignore(), false);
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (nameof(BaseClass.BaseProperty), BASE_VALUE));
     }
 
     [Fact]
     public void GivenInheritedTypesIncluded_WhenBaseOrderLowered_ReflectedInDerivedType()
     {
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Order(-100), true);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Order(-100), true);
         AssertJson((nameof(BaseClass.BaseProperty), BASE_VALUE), (nameof(DerivedClass.DerivedProperty), DERIVED_VALUE));
     }
 
     [Fact]
     public void GivenInheritedTypesNotIncluded_WhenBaseOrderLowered_NotChangedInDerivedType()
     {
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Order(-100), false);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Order(-100), false);
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (nameof(BaseClass.BaseProperty), BASE_VALUE));
     }
 
@@ -72,8 +72,8 @@ public class InheritanceTests
         const string BASE_NAME = "base-name-changed";
         const string DERIVED_NAME = "derived-name-changed";
 
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), true);
-        Options.WithHigherPriority<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), true);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), true);
+        Options.Configure<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), true);
 
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (DERIVED_NAME, BASE_VALUE));
     }
@@ -84,8 +84,8 @@ public class InheritanceTests
         const string BASE_NAME = "base-name-changed";
         const string DERIVED_NAME = "derived-name-changed";
 
-        Options.WithHigherPriority<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), true);
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), true);
+        Options.Configure<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), true);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), true);
 
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (DERIVED_NAME, BASE_VALUE));
     }
@@ -96,8 +96,8 @@ public class InheritanceTests
         const string BASE_NAME = "base-name-changed";
         const string DERIVED_NAME = "derived-name-changed";
 
-        Options.WithHigherPriority<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), false);
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), false);
+        Options.Configure<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), false);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), false);
 
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (DERIVED_NAME, BASE_VALUE));
     }
@@ -108,8 +108,8 @@ public class InheritanceTests
         const string BASE_NAME = "base-name-changed";
         const string DERIVED_NAME = "derived-name-changed";
 
-        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), false);
-        Options.WithHigherPriority<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), false);
+        Options.Configure<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), false);
+        Options.Configure<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), false);
 
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (DERIVED_NAME, BASE_VALUE));
     }

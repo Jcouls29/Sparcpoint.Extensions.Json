@@ -7,21 +7,7 @@ namespace System.Text.Json;
 
 public static class JsonSerializerOptionsExtensions
 {
-    public static JsonSerializerOptions WithLowerPriority<T>(this JsonSerializerOptions options, Action<JsonEntityBuilder<T>> configure, bool includeInheritedTypes = true)
-    {
-        if (!IsValidType(typeof(T)))
-            throw new InvalidOperationException("Only classes and structs can be configured.");
-
-        var builder = new JsonEntityBuilder<T>(includeInheritedTypes);
-        configure(builder);
-        options.TypeInfoResolverChain.Add(builder.Build());
-
-        CheckLastInChainIsDefault(options);
-
-        return options;
-    }
-
-    public static JsonSerializerOptions WithHigherPriority<T>(this JsonSerializerOptions options, Action<JsonEntityBuilder<T>> configure, bool includeInheritedTypes = true)
+    public static JsonSerializerOptions Configure<T>(this JsonSerializerOptions options, Action<JsonEntityBuilder<T>> configure, bool includeInheritedTypes = true)
     {
         if (!IsValidType(typeof(T)))
             throw new InvalidOperationException("Only classes and structs can be configured.");

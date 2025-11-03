@@ -15,75 +15,75 @@ public class ConfigureEntityTests
     [Fact]
     public void CanConfigureClass()
     {
-        Options.WithHigherPriority<ClassType>(b => { });
+        Options.Configure<ClassType>(b => { });
     }
 
     [Fact]
     public void CanConfigureRecordClass()
     {
-        Options.WithHigherPriority<RecordType>(b => { });
+        Options.Configure<RecordType>(b => { });
     }
 
     [Fact]
     public void CanConfigureStruct()
     {
-        Options.WithHigherPriority<StructType>(b => { });
+        Options.Configure<StructType>(b => { });
     }
 
     [Fact]
     public void CanConfigureRecordStruct()
     {
-        Options.WithHigherPriority<RecordStructType>(b => { });
+        Options.Configure<RecordStructType>(b => { });
     }
 
     [Fact]
     public void CanConfigureReadonlyRecordStruct()
     {
-        Options.WithHigherPriority<ReadonlyRecordStructType>(b => { });
+        Options.Configure<ReadonlyRecordStructType>(b => { });
     }
 
     [Fact]
     public void ThrowsOnPrimitiveTypes()
     {
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<byte>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<sbyte>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<short>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<ushort>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<int>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<uint>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<long>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<ulong>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<float>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<double>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<decimal>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<char>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<bool>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<string>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<byte>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<sbyte>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<short>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<ushort>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<int>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<uint>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<long>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<ulong>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<float>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<double>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<decimal>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<char>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<bool>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<string>(b => { }));
     }
 
     [Fact]
     public void ThrowsOnEnumTypes()
     {
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<EnumType>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<EnumType>(b => { }));
     }
 
     [Fact]
     public void ThrowsOnEnumerableTypes()
     {
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<ClassType[]>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<IEnumerable<ClassType>>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<List<ClassType>>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<Dictionary<string, ClassType>>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<ClassType[]>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<IEnumerable<ClassType>>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<List<ClassType>>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<Dictionary<string, ClassType>>(b => { }));
     }
 
     [Fact]
     public void ThrowsOnDateTimeTypes()
     {
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<DateTime>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<DateTimeOffset>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<DateOnly>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<TimeOnly>(b => { }));
-        Assert.Throws<InvalidOperationException>(() => Options.WithHigherPriority<TimeSpan>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<DateTime>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<DateTimeOffset>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<DateOnly>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<TimeOnly>(b => { }));
+        Assert.Throws<InvalidOperationException>(() => Options.Configure<TimeSpan>(b => { }));
     }
 
     public class ClassType { }

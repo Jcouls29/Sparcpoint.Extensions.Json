@@ -8,7 +8,7 @@ public class ConfigurePropertyTests
     public void CanProvidePropertyExpression()
     {
         var options = new JsonSerializerOptions();
-        options.WithHigherPriority<SampleClass>(b => b
+        options.Configure<SampleClass>(b => b
             .Property(t => t.Property)
         );
     }
@@ -17,7 +17,7 @@ public class ConfigurePropertyTests
     public void CanProvideFieldExpression()
     {
         var options = new JsonSerializerOptions();
-        options.WithHigherPriority<SampleClass>(b => b
+        options.Configure<SampleClass>(b => b
             .Property(t => t.Field)
         );
     }
@@ -28,7 +28,7 @@ public class ConfigurePropertyTests
         var options = new JsonSerializerOptions();
         Assert.Throws<InvalidOperationException>(() =>
         {
-            options.WithHigherPriority<SampleClass>(b => b
+            options.Configure<SampleClass>(b => b
                 .Property(t => t.Function())
             );
         });
@@ -40,7 +40,7 @@ public class ConfigurePropertyTests
         var options = new JsonSerializerOptions();
         Assert.Throws<InvalidOperationException>(() =>
         {
-            options.WithHigherPriority<SampleClass>(b => b
+            options.Configure<SampleClass>(b => b
                 .Property(t => SampleClass.CONSTANT)
             );
         });
@@ -52,7 +52,7 @@ public class ConfigurePropertyTests
         var options = new JsonSerializerOptions();
         Assert.Throws<InvalidOperationException>(() =>
         {
-            options.WithHigherPriority<SampleClass>(b => b
+            options.Configure<SampleClass>(b => b
                 .Property(t => new SampleClass())
             );
         });
