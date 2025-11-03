@@ -102,6 +102,18 @@ public class InheritanceTests
         AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (DERIVED_NAME, BASE_VALUE));
     }
 
+    [Fact]
+    public void HigherPriorityBaseClassNotInherited_DoesNotOverrideDerivedNotInherited_Reversed()
+    {
+        const string BASE_NAME = "base-name-changed";
+        const string DERIVED_NAME = "derived-name-changed";
+
+        Options.WithHigherPriority<BaseClass>(b => b.Property(t => t.BaseProperty).Name(BASE_NAME), false);
+        Options.WithHigherPriority<DerivedClass>(b => b.Property(t => t.BaseProperty).Name(DERIVED_NAME), false);
+
+        AssertJson((nameof(DerivedClass.DerivedProperty), DERIVED_VALUE), (DERIVED_NAME, BASE_VALUE));
+    }
+
     private void AssertJson(params (string Name, string Value)[] expectedProps)
     {
         var actual = JsonSerializer.Serialize(new DerivedClass(), Options);
