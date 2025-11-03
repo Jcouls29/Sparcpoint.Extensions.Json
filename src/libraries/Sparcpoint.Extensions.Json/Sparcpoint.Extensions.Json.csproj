@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Company>Sparcpoint LLC</Company>
+    <Authors>Justin Coulston</Authors>
+    <Title>Sparcpoint Extensions - JSON</Title>
+    <Description>JSON Extensions for System.Text.Json
+- Fluent API</Description>
+    <Copyright>(c) 2025 Sparcpoint LLC</Copyright>
+    <PackageProjectUrl>https://github.com/Jcouls29/Sparcpoint.Extensions.Json</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jcouls29/Sparcpoint.Extensions.Json</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>Sparcpoint;JSON;System.Text.Json</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.10" />
+  </ItemGroup>
+
+</Project>
