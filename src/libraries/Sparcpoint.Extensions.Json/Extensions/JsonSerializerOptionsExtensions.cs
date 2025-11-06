@@ -5,8 +5,20 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace System.Text.Json;
 
+/// <summary>
+/// Extensions for <see cref="JsonSerializerOptions"/> providing a fluent API for configuring JSON serialization.
+/// </summary>
 public static class JsonSerializerOptionsExtensions
 {
+    /// <summary>
+    /// Fluid API for configuring JSON serialization for a specific type.
+    /// </summary>
+    /// <typeparam name="T">The type to configure.</typeparam>
+    /// <param name="options">The <see cref="JsonSerializerOptions"/> to configure.</param>
+    /// <param name="configure">The configuration action.</param>
+    /// <param name="includeInheritedTypes">Whether to include inherited types.</param>
+    /// <returns>The updated <see cref="JsonSerializerOptions"/>.</returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static JsonSerializerOptions Configure<T>(this JsonSerializerOptions options, Action<JsonEntityBuilder<T>> configure, bool includeInheritedTypes = true)
     {
         if (!IsValidType(typeof(T)))
